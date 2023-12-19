@@ -2,6 +2,12 @@ package com.minis;
 
 import org.dom4j.Element;
 
+/**
+ * XMLBean定义读取器
+ *
+ * 1. 从相关资源中获取Bean信息
+ * 2. 将Bean信息注册到对应的BeanFactory中
+ */
 public class XmlBeanDefinitionReader {
     BeanFactory beanFactory;
 
@@ -19,7 +25,7 @@ public class XmlBeanDefinitionReader {
             String beanId = element.attributeValue("id");
             String beanClass = element.attributeValue("class");
             BeanDefinition beanDefinition = new BeanDefinition(beanId,beanClass);
-            beanFactory.registerBeanDefinition(beanDefinition);
+            beanFactory.registerBean(beanId,beanDefinition);
         }
     }
 }

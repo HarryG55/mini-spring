@@ -1,24 +1,15 @@
 package com.minis;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentException;
-import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
-
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+/**
+ * 将上下文配置加载和Bean的相关操作逻辑解耦
+ */
 public class ClassPathXmlApplicationContext implements BeanFactory{
 
     BeanFactory beanFactory;
 
     public ClassPathXmlApplicationContext(String fileName) {
         Resource resource = new ClassPathXmlResource(fileName);
+        // 默认使用简单Bean工厂
         BeanFactory beanFactory = new SimpleBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
         reader.loadBeanDefinition(resource);
@@ -30,7 +21,28 @@ public class ClassPathXmlApplicationContext implements BeanFactory{
     }
 
     @Override
-    public void registerBeanDefinition(BeanDefinition beanDefinition) {
-        this.beanFactory.registerBeanDefinition(beanDefinition);
+    public boolean containsBean(String name) {
+        return beanFactory.containsBean(name);
     }
+
+    @Override
+    public boolean isSingleton(String name) {
+        return false;
+    }
+
+    @Override
+    public boolean isPrototype(String name) {
+        return false;
+    }
+
+    @Override
+    public Class<?> getType(String name) {
+        return null;
+    }
+
+    @Override
+    public void registerBean(String beanName, Object obj) {
+        beanFactory.registerBean(beanName,obj);
+    }
+
 }
