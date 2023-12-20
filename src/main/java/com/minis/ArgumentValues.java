@@ -25,7 +25,7 @@ public class ArgumentValues {
      *     <constructor-arg index="1" value="123" />
      * </bean>
      */
-    private final Map<Integer,ArgumentValue> indexedArgumentValues = new HashMap<>(0);
+//    private final Map<Integer,ArgumentValue> indexedArgumentValues = new HashMap<>(0);
 
 
     /**
@@ -48,58 +48,26 @@ public class ArgumentValues {
      *     <constructor-arg ref="anotherBean" />
      * </bean>
      */
-    private final List<ArgumentValue> genericArgumentValues = new LinkedList<>();
+    private final List<ArgumentValue> argumentValueList = new LinkedList<>();
 
-    private void addArgumentValue(Integer key,ArgumentValue newValue){
-        indexedArgumentValues.put(key,newValue);
+    public void addArgumentValue(Object value,String type){
+        argumentValueList.add(new ArgumentValue(value,type));
     }
 
-    public boolean hasIndexedArgumentValue(Integer key){
-        return indexedArgumentValues.containsKey(key);
+    public void addArgumentValue(Object value,String type,String name){
+        argumentValueList.add(new ArgumentValue(value,type,name));
     }
 
-    public ArgumentValue getIndexedArgumentValue(Integer key){
-        return indexedArgumentValues.get(key);
-    }
-
-    public void addGenericArgumentValue(Object value,String type){
-        genericArgumentValues.add(new ArgumentValue(value,type));
-    }
-
-    private void addGenericArgumentValue(ArgumentValue newValue){
-        if(newValue.getName() != null){
-            // 去重
-            for(Iterator<ArgumentValue> it = genericArgumentValues.iterator();it.hasNext();){
-                ArgumentValue currentValue = it.next();
-                if(newValue.getName().equals(currentValue.getName())){
-                    it.remove();
-                }
-            }
-        }
-        genericArgumentValues.add(newValue);
-    }
-
-    public ArgumentValue getGenericArgumentValue(String requiredName){
-        for (ArgumentValue valueHolder : genericArgumentValues) {
-            if(valueHolder.getName() != null && (requiredName == null || !valueHolder.getName().equals(requiredName))){
-                continue;
-            }
-            return valueHolder;
-        }
-        return null;
+    public ArgumentValue getIndexdArgumentValue(int index){
+        return argumentValueList.get(index);
     }
 
     public int getArgumentCount(){
-        return genericArgumentValues.size();
+        return argumentValueList.size();
     }
 
     public boolean isEmpty(){
-        return genericArgumentValues.isEmpty();
+        return argumentValueList.isEmpty();
     }
-
-
-
-
-
 
 }

@@ -5,15 +5,22 @@ package com.minis;
  */
 public class ClassPathXmlApplicationContext implements BeanFactory{
 
-    BeanFactory beanFactory;
+    SimpleBeanFactory beanFactory;
 
-    public ClassPathXmlApplicationContext(String fileName) {
-        Resource resource = new ClassPathXmlResource(fileName);
-        // 默认使用简单Bean工厂
-        BeanFactory beanFactory = new SimpleBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinition(resource);
-        this.beanFactory = beanFactory;
+    public ClassPathXmlApplicationContext(String fileName){
+        this(fileName,true);
+    }
+
+    public ClassPathXmlApplicationContext(String fileName,boolean isRefresh){
+        Resource resouce = new ClassPathXmlResource(fileName);
+        SimpleBeanFactory simpleBeanFactory = new SimpleBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(simpleBeanFactory);
+
+        reader.loadBeanDefinition(resouce);
+        this.beanFactory = simpleBeanFactory;
+        if(isRefresh){
+            beanFactory.refresh();
+        }
     }
 
     public Object getBean(String beanId) throws BeansException {
