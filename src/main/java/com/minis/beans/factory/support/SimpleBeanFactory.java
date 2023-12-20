@@ -1,4 +1,10 @@
-package com.minis;
+package com.minis.beans.factory.support;
+
+import com.minis.*;
+import com.minis.beans.factory.BeanFactory;
+import com.minis.beans.factory.config.BeanDefinition;
+import com.minis.beans.factory.config.ConstructorArgumentValue;
+import com.minis.beans.factory.config.ConstructorArgumentValues;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
@@ -7,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class SimpleBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory{
+public class SimpleBeanFactory extends DefaultSingletonBeanRegistry implements BeanFactory {
 
-    private Map<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
+    private Map<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>(256);
     private Map<String,Object> earlySingletonObjects = new ConcurrentHashMap(256);
     private List<String> beanDefinitionNames = new ArrayList<>();
 
@@ -89,12 +95,12 @@ public class SimpleBeanFactory extends DefaultSingletonBeanRegistry implements B
             // 获取类
             clz = Class.forName(bd.getClassName());
             // 处理构造器参数
-            ArgumentValues avs = bd.getConstrutorArgumentValues();
+            ConstructorArgumentValues avs = bd.getConstrutorArgumentValues();
             if(!avs.isEmpty()){
                 Class<?>[] paramTypes = new Class<?>[avs.getArgumentCount()];
                 Object[] paramValues = new Object[avs.getArgumentCount()];
                 for (int i = 0; i < avs.getArgumentCount(); i++) {
-                    ArgumentValue av = avs.getIndexdArgumentValue(i);
+                    ConstructorArgumentValue av = avs.getIndexdArgumentValue(i);
 
                     // 类型判断
                     if("String".equals(av.getType()) || "java.lang.String".equals(av.getType())){

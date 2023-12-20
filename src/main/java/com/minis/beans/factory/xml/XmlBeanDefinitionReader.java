@@ -1,5 +1,9 @@
-package com.minis;
+package com.minis.beans.factory.xml;
 
+import com.minis.*;
+import com.minis.beans.factory.BeanFactory;
+import com.minis.beans.factory.config.BeanDefinition;
+import com.minis.beans.factory.config.ConstructorArgumentValues;
 import org.dom4j.Element;
 
 import java.util.ArrayList;
@@ -54,7 +58,7 @@ public class XmlBeanDefinitionReader {
             }
             // 构造器参数
             List<Element> constructorElements = element.elements("constructor-arg");
-            ArgumentValues AVS = new ArgumentValues();
+            ConstructorArgumentValues AVS = new ConstructorArgumentValues();
             for (Element e : constructorElements) {
                 String aType = e.attributeValue("type");
                 String aName = e.attributeValue("name");

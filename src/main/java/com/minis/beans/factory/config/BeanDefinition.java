@@ -1,4 +1,6 @@
-package com.minis;
+package com.minis.beans.factory.config;
+
+import com.minis.PropertyValues;
 
 public class BeanDefinition {
 
@@ -16,7 +18,7 @@ public class BeanDefinition {
     /**
      * 构造器参数值
      */
-    private ArgumentValues construtorArgumentValues;
+    private ConstructorArgumentValues construtorArgumentValues;
     /**
      * 注入属性值
      */
@@ -72,11 +74,11 @@ public class BeanDefinition {
         this.dependsOn = dependsOn;
     }
 
-    public ArgumentValues getConstrutorArgumentValues() {
+    public ConstructorArgumentValues getConstrutorArgumentValues() {
         return construtorArgumentValues;
     }
 
-    public void setConstrutorArgumentValues(ArgumentValues construtorArgumentValues) {
+    public void setConstrutorArgumentValues(ConstructorArgumentValues construtorArgumentValues) {
         this.construtorArgumentValues = construtorArgumentValues;
     }
 

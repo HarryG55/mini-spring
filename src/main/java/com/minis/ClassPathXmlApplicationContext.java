@@ -1,9 +1,13 @@
 package com.minis;
 
+import com.minis.beans.factory.BeanFactory;
+import com.minis.beans.factory.support.SimpleBeanFactory;
+import com.minis.beans.factory.xml.XmlBeanDefinitionReader;
+
 /**
  * 将上下文配置加载和Bean的相关操作逻辑解耦
  */
-public class ClassPathXmlApplicationContext implements BeanFactory{
+public class ClassPathXmlApplicationContext implements BeanFactory {
 
     SimpleBeanFactory beanFactory;
 

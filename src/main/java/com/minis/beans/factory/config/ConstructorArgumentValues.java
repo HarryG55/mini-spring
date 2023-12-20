@@ -1,4 +1,4 @@
-package com.minis;
+package com.minis.beans.factory.config;
 
 import java.util.*;
 
@@ -6,7 +6,7 @@ import java.util.*;
  * ArgumentValue的多值容器
  * 构造器方法注入的额外设计
  */
-public class ArgumentValues {
+public class ConstructorArgumentValues {
 
     /**
      * 具有索引的构造参数
@@ -48,17 +48,17 @@ public class ArgumentValues {
      *     <constructor-arg ref="anotherBean" />
      * </bean>
      */
-    private final List<ArgumentValue> argumentValueList = new LinkedList<>();
+    private final List<ConstructorArgumentValue> argumentValueList = new LinkedList<>();
 
     public void addArgumentValue(Object value,String type){
-        argumentValueList.add(new ArgumentValue(value,type));
+        argumentValueList.add(new ConstructorArgumentValue(value,type));
     }
 
     public void addArgumentValue(Object value,String type,String name){
-        argumentValueList.add(new ArgumentValue(value,type,name));
+        argumentValueList.add(new ConstructorArgumentValue(value,type,name));
     }
 
-    public ArgumentValue getIndexdArgumentValue(int index){
+    public ConstructorArgumentValue getIndexdArgumentValue(int index){
         return argumentValueList.get(index);
     }
 

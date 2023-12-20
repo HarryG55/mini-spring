@@ -1,4 +1,6 @@
-package com.minis;
+package com.minis.beans.factory;
+
+import com.minis.BeansException;
 
 /**
  * Bean工厂 定义了Bean的创建，注册，管理等操作
