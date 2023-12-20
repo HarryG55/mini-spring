@@ -9,7 +9,7 @@ import com.minis.beans.factory.xml.XmlBeanDefinitionReader;
  */
 public class ClassPathXmlApplicationContext implements BeanFactory {
 
-    SimpleBeanFactory beanFactory;
+    AutowiredCapableBeanFactory beanFactory;
 
     public ClassPathXmlApplicationContext(String fileName){
         this(fileName,true);
@@ -17,7 +17,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
 
     public ClassPathXmlApplicationContext(String fileName,boolean isRefresh){
         Resource resouce = new ClassPathXmlResource(fileName);
-        SimpleBeanFactory simpleBeanFactory = new SimpleBeanFactory();
+        AutowiredCapableBeanFactory simpleBeanFactory = new AutowiredCapableBeanFactory();
         XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(simpleBeanFactory);
 
         reader.loadBeanDefinition(resouce);
@@ -25,6 +25,27 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
         if(isRefresh){
             beanFactory.refresh();
         }
+    }
+
+//    public List<BeanFactoryPostProcessor> getBeanFactoryPostProcessors(){
+//        return beanFactory.getBeanFactoryPostProcessors();
+//    }
+//
+//    public void addBeanFactoryPostProcessor(BeanFactoryPostProcessor beanFactoryPostProcessor){
+//        beanFactory.addBeanFactoryPostProcessor(beanFactoryPostProcessor);
+//    }
+
+    public void refresh() throws BeansException, IllegalStateException{
+        registerBeanPostProcessors(beanFactory);
+        onRefresh();
+    }
+
+    private void registerBeanPostProcessors(AutowiredCapableBeanFactory beanFactory){
+        beanFactory.addBeanPostProcessor(new AutowiredAnnotationBeanPostProcessor());
+    }
+
+    private void onRefresh(){
+        beanFactory.refresh();
     }
 
     public Object getBean(String beanId) throws BeansException {
