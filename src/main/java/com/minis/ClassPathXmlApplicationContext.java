@@ -9,7 +9,7 @@ import com.minis.beans.factory.xml.XmlBeanDefinitionReader;
  */
 public class ClassPathXmlApplicationContext implements BeanFactory {
 
-    AutowiredCapableBeanFactory beanFactory;
+    AbstractAutowireCapableBeanFactory beanFactory;
 
     public ClassPathXmlApplicationContext(String fileName){
         this(fileName,true);
@@ -17,11 +17,11 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
 
     public ClassPathXmlApplicationContext(String fileName,boolean isRefresh){
         Resource resouce = new ClassPathXmlResource(fileName);
-        AutowiredCapableBeanFactory simpleBeanFactory = new AutowiredCapableBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(simpleBeanFactory);
+        AbstractAutowireCapableBeanFactory beanFactory = new AbstractAutowireCapableBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
 
         reader.loadBeanDefinition(resouce);
-        this.beanFactory = simpleBeanFactory;
+        this.beanFactory = beanFactory;
         if(isRefresh){
             beanFactory.refresh();
         }
@@ -40,7 +40,7 @@ public class ClassPathXmlApplicationContext implements BeanFactory {
         onRefresh();
     }
 
-    private void registerBeanPostProcessors(AutowiredCapableBeanFactory beanFactory){
+    private void registerBeanPostProcessors(AbstractAutowireCapableBeanFactory beanFactory){
         beanFactory.addBeanPostProcessor(new AutowiredAnnotationBeanPostProcessor());
     }
 

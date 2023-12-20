@@ -1,0 +1,4 @@
+package com.minis;
+
+public interface ConfigurableListableBeanFactory extends ListableBeanFactory,AutowiredCapableBeanFactory,ConfigurableBeanFactory{
+}
